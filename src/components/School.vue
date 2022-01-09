@@ -1,20 +1,21 @@
 <template>
   <div class="school_sty">
-    <h3 @click="showName">学生姓名：{{ name }}</h3>
-    <h3>学生年龄：{{ age }}</h3>
+    <h3 @click="showName">学校名称{{ name }}</h3>
   </div>
 </template>
 
 <script>
+// 导入模块
 import { mixin } from "../mixin";
 export default {
-  name: "Student",
+  name: "School",
   data() {
     return {
-      name: "花椰菜",
-      age: 19,
+      name: "尚硅谷",
+      address: "北京",
     };
   },
+  // 添加新的配置项，且以数组的形式
   mixins: [mixin],
 };
 </script>
