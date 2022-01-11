@@ -1,6 +1,8 @@
 <template>
   <ul class="todo-main">
     <Item />
+    <Item />
+    <Item />
   </ul>
 </template>
 
