@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Add />
-      <List />
+      <List :items="items" />
       <Choice />
     </div>
   </div>
@@ -17,6 +17,16 @@ export default {
     Add,
     List,
     Choice,
+  },
+  // 数据通过props传给List,List通过props传递给Item
+  data() {
+    return {
+      items: [
+        { id: "001", name: "吃饭", done: false },
+        { id: "002", name: "睡觉", done: true },
+        { id: "003", name: "开车", done: false },
+      ],
+    };
   },
 };
 </script>

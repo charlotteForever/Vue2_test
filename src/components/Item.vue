@@ -1,8 +1,8 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" />
-      <span>xxxxx</span>
+      <input type="checkbox" :checked="itemDone" />
+      <span>{{ itemName }}</span>
     </label>
     <button class="btn btn-danger" style="display: none">删除</button>
   </li>
@@ -11,6 +11,7 @@
 <script>
 export default {
   name: "Item",
+  props: ["key", "itemName", "itemDone"],
 };
 </script>
 

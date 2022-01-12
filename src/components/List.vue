@@ -1,8 +1,12 @@
 <template>
   <ul class="todo-main">
-    <Item />
-    <Item />
-    <Item />
+    <!-- 从APP来的数据给子组件用 -->
+    <Item
+      v-for="itemObj in items"
+      :key="itemObj.id"
+      :itemName="itemObj.name"
+      :itemDone="itemObj.done"
+    />
   </ul>
 </template>
 
@@ -13,6 +17,7 @@ export default {
   components: {
     Item,
   },
+  props: ["items"],
 };
 </script>
 
