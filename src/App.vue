@@ -1,7 +1,7 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Add />
+      <Add :addItem="addItem" />
       <List :items="items" />
       <Choice />
     </div>
@@ -27,6 +27,11 @@ export default {
         { id: "003", name: "开车", done: false },
       ],
     };
+  },
+  methods: {
+    addItem(itemObj) {
+      this.items.unshift(itemObj);
+    },
   },
 };
 </script>

@@ -1,12 +1,32 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+    <input
+      type="text"
+      placeholder="请输入你的任务名称，按回车键确认"
+      v-model="itemName"
+      @keyup.enter="add"
+    />
   </div>
 </template>
 
 <script>
+import { nanoid } from "nanoid";
 export default {
   name: "Add",
+  props: ["addItem"],
+  data() {
+    return {
+      itemName: "",
+    };
+  },
+  methods: {
+    add() {
+      if (this.itemName === "") alert("输入不能为空");
+      const itemObj = { id: nanoid(), name: this.itemName, done: false };
+      this.addItem(itemObj);
+      this.itemName = "";
+    },
+  },
 };
 </script>
 

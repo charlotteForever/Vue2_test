@@ -11,7 +11,7 @@
 <script>
 export default {
   name: "Item",
-  props: ["key", "itemName", "itemDone"],
+  props: ["itemName", "itemDone"],
 };
 </script>
 
