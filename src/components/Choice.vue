@@ -1,25 +1,48 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <!-- 双向数据绑定 如果isAll的值为false，则把所有item的done也都改为false -->
+      <input type="checkbox" v-model="isAll" />
     </label>
     <span>
-      <span>已完成{{ totalDone }}</span> / 全部{{ items.length }}
+      <span>已完成{{ totalDone }}</span> / 全部{{ totalItem }}
     </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" @click="handleDelete">清除已完成任务</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Choice",
-  props: ["items"],
+  props: ["items", "changeDone", "deleteDone"],
   computed: {
+    // item的个数
+    totalItem() {
+      return this.items.length;
+    },
+    // 已完成的事件的个数
     totalDone() {
       return this.items.reduce(
         (pre, current) => pre + (current.done ? 1 : 0),
         0
       );
+    },
+    // 是否all事件已完成
+    isAll: {
+      // isAll的值由总数是否等于完成数确定
+      get() {
+        // 这里要用this，不然访问不到其他两个计算属性
+        return this.totalDone === this.totalItem && this.totalItem > 0;
+      },
+      //如果isAll的值为false，则把所有item的done也都改为false
+      set(value) {
+        this.changeDone(value);
+      },
+    },
+  },
+  methods: {
+    handleDelete() {
+      this.deleteDone();
     },
   },
 };

@@ -3,7 +3,11 @@
     <div class="todo-wrap">
       <Add :addItem="addItem" />
       <List :items="items" :checkItem="checkItem" :deleteItem="deleteItem" />
-      <Choice :items="items" />
+      <Choice
+        :items="items"
+        :changeDone="changeDone"
+        :deleteDone="deleteDone"
+      />
     </div>
   </div>
 </template>
@@ -48,6 +52,17 @@ export default {
       // filter返回一个新数组，所以需要再次赋值
       this.items = this.items.filter((item) => {
         return item.id != id;
+      });
+    },
+    changeDone(done) {
+      this.items.forEach((item) => {
+        item.done = done;
+      });
+    },
+    deleteDone() {
+      this.items = this.items.filter((item) => {
+        // 返回done为0，即没有勾选的 新数组
+        return !item.done;
       });
     },
   },
