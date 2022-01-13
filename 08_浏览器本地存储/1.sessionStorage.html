@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>sessionStorage</h2>
+    <button onclick="addData()">点击添加记录</button>
+    <button onclick="showData()">点击查看记录</button>
+    <button onclick="deleteData()">点击删除记录</button>
+    <button onclick="deleteAllData()">点击清空记录</button>
+    <script>
+        let p = { name: '小明', age: 19 }
+        function addData() {
+            sessionStorage.setItem('msg', 'hello')
+            sessionStorage.setItem('msg2', '哈哈哈')
+            sessionStorage.setItem('person', JSON.stringify(p))
+        }
+        function showData() {
+            console.log(sessionStorage.getItem('msg'))
+            console.log(JSON.parse(sessionStorage.getItem('person')))
+        }
+        function deleteData() {
+            sessionStorage.removeItem('msg')
+        }
+        function deleteAllData() {
+            sessionStorage.clear()
+        }
+    </script>
+</body>
+
+</html>

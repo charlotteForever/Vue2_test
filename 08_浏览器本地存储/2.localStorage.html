@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>localStorage</h2>
+    <button onclick="addData()">点击添加记录</button>
+    <button onclick="showData()">点击查看记录</button>
+    <button onclick="deleteData()">点击删除记录</button>
+    <button onclick="deleteAllData()">点击清空记录</button>
+    <script>
+        let p = { name: '小明', age: 19 }
+        function addData() {
+            localStorage.setItem('msg', 'hello')
+            localStorage.setItem('msg2', '哈哈哈')
+            localStorage.setItem('person', JSON.stringify(p))
+        }
+        function showData() {
+            console.log(localStorage.getItem('msg'))
+            console.log(JSON.parse(localStorage.getItem('person')))
+        }
+        function deleteData() {
+            localStorage.removeItem('msg')
+        }
+        function deleteAllData() {
+            localStorage.clear()
+        }
+    </script>
+</body>
+
+</html>
