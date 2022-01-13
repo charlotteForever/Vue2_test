@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Add :addItem="addItem" />
-      <List :items="items" :checkItem="checkItem" />
+      <List :items="items" :checkItem="checkItem" :deleteItem="deleteItem" />
       <Choice />
     </div>
   </div>
@@ -29,9 +29,11 @@ export default {
     };
   },
   methods: {
+    // 添加一个item项
     addItem(itemObj) {
       this.items.unshift(itemObj);
     },
+    // 修改item的done状态
     checkItem(id) {
       // 数据在哪，就在哪里修改数据
       // 遍历拿到对应的itemObj，修改done属性
@@ -39,6 +41,13 @@ export default {
         if (todo.id === id) {
           todo.done = !todo.done;
         }
+      });
+    },
+    // 删除一个item
+    deleteItem(id) {
+      // filter返回一个新数组，所以需要再次赋值
+      this.items = this.items.filter((item) => {
+        return item.id != id;
       });
     },
   },

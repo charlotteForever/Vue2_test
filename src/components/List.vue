@@ -6,6 +6,7 @@
       :key="itemObj.id"
       :itemObj="itemObj"
       :checkItem="checkItem"
+      :deleteItem="deleteItem"
     />
   </ul>
 </template>
@@ -17,7 +18,7 @@ export default {
   components: {
     Item,
   },
-  props: ["items", "checkItem"],
+  props: ["items", "checkItem", "deleteItem"],
 };
 </script>
 
