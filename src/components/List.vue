@@ -4,8 +4,8 @@
     <Item
       v-for="itemObj in items"
       :key="itemObj.id"
-      :itemName="itemObj.name"
-      :itemDone="itemObj.done"
+      :itemObj="itemObj"
+      :checkItem="checkItem"
     />
   </ul>
 </template>
@@ -17,7 +17,7 @@ export default {
   components: {
     Item,
   },
-  props: ["items"],
+  props: ["items", "checkItem"],
 };
 </script>
 

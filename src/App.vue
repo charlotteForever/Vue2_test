@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Add :addItem="addItem" />
-      <List :items="items" />
+      <List :items="items" :checkItem="checkItem" />
       <Choice />
     </div>
   </div>
@@ -31,6 +31,15 @@ export default {
   methods: {
     addItem(itemObj) {
       this.items.unshift(itemObj);
+    },
+    checkItem(id) {
+      // 数据在哪，就在哪里修改数据
+      // 遍历拿到对应的itemObj，修改done属性
+      this.items.forEach((todo) => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+      });
     },
   },
 };

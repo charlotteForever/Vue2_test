@@ -1,8 +1,12 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" :checked="itemDone" />
-      <span>{{ itemName }}</span>
+      <input
+        type="checkbox"
+        :checked="itemObj.done"
+        @change="handleChange(itemObj.id)"
+      />
+      <span>{{ itemObj.name }}</span>
     </label>
     <button class="btn btn-danger" style="display: none">删除</button>
   </li>
@@ -11,7 +15,12 @@
 <script>
 export default {
   name: "Item",
-  props: ["itemName", "itemDone"],
+  props: ["itemObj", "checkItem"],
+  methods: {
+    handleChange(id) {
+      this.checkItem(id);
+    },
+  },
 };
 </script>
 
