@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Add :addItem="addItem" />
       <List :items="items" :checkItem="checkItem" :deleteItem="deleteItem" />
-      <Choice />
+      <Choice :items="items" />
     </div>
   </div>
 </template>
