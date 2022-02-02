@@ -1,7 +1,8 @@
 <template>
   <div class="app">
+    <h3>学生的名字是：{{ stuName }}</h3>
     <School :getSchoolName="getSchoolName" />
-    <Student v-on:atguigu="getStudentName" @demo="m1" />
+    <Student ref="student" />
   </div>
 </template>
 
@@ -13,6 +14,11 @@ export default {
     School,
     Student,
   },
+  data() {
+    return {
+      stuName: "",
+    };
+  },
   methods: {
     getSchoolName(name) {
       console.log("app得到了学校的名称：" + name);
@@ -20,10 +26,12 @@ export default {
     // 有多个参数时可以使用剩余参数
     getStudentName(name) {
       console.log("app得到了学生的姓名：" + name);
+      // vue的承诺：methods里面的this指向为当前组件的实例对象
+      this.stuName = name;
     },
-    m1() {
-      console.log("demo事件被触发了");
-    },
+  },
+  mounted() {
+    this.$refs.student.$on("atguigu", this.getStudentName);
   },
 };
 </script>
