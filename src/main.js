@@ -3,12 +3,9 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+// 需要导入模块后use
 new Vue({
-    render: h => h(App),
-    beforeCreate() {
-        // 给vue实例对象上添加全局事件总线
-        // 利用了一个重要关系：Vue.prototype=VueComponent.prototype.__proto__
-        // 这个关系使组件实例对象可以访问到vue原型对象上的属性和方法
-        Vue.prototype.$bus = this
-    },
+    // render传入一个函数h，h函数传入App父组件，
+    // render代替了template
+    render: h => h(App)
 }).$mount('#app')
