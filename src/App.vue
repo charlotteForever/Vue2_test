@@ -1,12 +1,12 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Add :addItem="addItem" />
+      <Add @addItem="addItem" />
       <List :items="items" :checkItem="checkItem" :deleteItem="deleteItem" />
       <Choice
         :items="items"
-        :changeDone="changeDone"
-        :deleteDone="deleteDone"
+        @changeDone="changeDone"
+        @deleteDone="deleteDone"
       />
     </div>
   </div>

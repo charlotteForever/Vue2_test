@@ -13,7 +13,6 @@
 import { nanoid } from "nanoid";
 export default {
   name: "Add",
-  props: ["addItem"],
   data() {
     return {
       itemName: "",
@@ -23,7 +22,8 @@ export default {
     add() {
       if (this.itemName === "") alert("输入不能为空");
       const itemObj = { id: nanoid(), name: this.itemName, done: false };
-      this.addItem(itemObj);
+      // this.addItem(itemObj);
+      this.$emit("addItem", itemObj);
       this.itemName = "";
     },
   },

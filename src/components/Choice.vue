@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "Choice",
-  props: ["items", "changeDone", "deleteDone"],
+  props: ["items"],
   computed: {
     // item的个数
     totalItem() {
@@ -36,13 +36,15 @@ export default {
       },
       //如果isAll的值为false，则把所有item的done也都改为false
       set(value) {
-        this.changeDone(value);
+        // this.changeDone(value);
+        this.$emit("changeDone", value);
       },
     },
   },
   methods: {
     handleDelete() {
-      this.deleteDone();
+      // this.deleteDone();
+      this.$emit("deleteDone");
     },
   },
 };
