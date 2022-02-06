@@ -1,116 +1,50 @@
 <template>
-  <div class="todo-container">
-    <div class="todo-wrap">
-      <Add @addItem="addItem" />
-      <List :items="items" :checkItem="checkItem" :deleteItem="deleteItem" />
-      <Choice
-        :items="items"
-        @changeDone="changeDone"
-        @deleteDone="deleteDone"
-      />
-    </div>
+  <div class="app">
+    <!-- 实现子组件给父组件传递信息的三种方式 -->
+    <!-- 方式1：父组件通过props给子组件传递一个函数 -->
+    <School :getSchoolName="getSchoolName" />
+
+    <!-- 方式2： 自定义事件，把事件atguigu绑定在student组件的实例对象vc身上,然后在组件中想办法触发事件-->
+    <!-- <Student v-on:atguigu="getStudentName" /> -->
+
+    <!-- 方法3:   也是自定义事件 但是灵活性强，可以应用在异步场景下 -->
+    <Student ref="student" />
   </div>
 </template>
 
 <script>
-import Add from "./components/Add.vue";
-import List from "./components/List.vue";
-import Choice from "./components/Choice.vue";
+import School from "./components/School.vue";
+import Student from "./components/Student.vue";
 export default {
   components: {
-    Add,
-    List,
-    Choice,
-  },
-  // 数据通过props传给List,List通过props传递给Item
-  data() {
-    return {
-      items: [
-        { id: "001", name: "吃饭", done: false },
-        { id: "002", name: "睡觉", done: true },
-        { id: "003", name: "开车", done: false },
-      ],
-    };
+    School,
+    Student,
   },
   methods: {
-    // 添加一个item项
-    addItem(itemObj) {
-      this.items.unshift(itemObj);
+    getSchoolName(name) {
+      console.log("app得到了学校的名称：" + name);
     },
-    // 修改item的done状态
-    checkItem(id) {
-      // 数据在哪，就在哪里修改数据
-      // 遍历拿到对应的itemObj，修改done属性
-      this.items.forEach((todo) => {
-        if (todo.id === id) {
-          todo.done = !todo.done;
-        }
-      });
+    // 有多个参数时可以使用剩余参数
+    getStudentName(name, ...params) {
+      console.log("app得到了学生的姓名：" + name + params);
     },
-    // 删除一个item
-    deleteItem(id) {
-      // filter返回一个新数组，所以需要再次赋值
-      this.items = this.items.filter((item) => {
-        return item.id != id;
-      });
-    },
-    changeDone(done) {
-      this.items.forEach((item) => {
-        item.done = done;
-      });
-    },
-    deleteDone() {
-      this.items = this.items.filter((item) => {
-        // 返回done为0，即没有勾选的 新数组
-        return !item.done;
-      });
-    },
+  },
+  mounted() {
+    // 拿到student组件的实例，当atguigu事件发生时，调用回调函数
+    setTimeout(() => {
+      // app组件实例挂载之后，过了三秒才在student组件实例上绑定atguigu事件
+      // this.$refs.student.$on("atguigu", this.getStudentName);
+      // 如想要该事件只触发一次
+      this.$refs.student.$once("atguigu", this.getStudentName);
+    }, 3000);
   },
 };
 </script>
 
 <style>
-/*base*/
-body {
-  background: #fff;
-}
-
-.btn {
-  display: inline-block;
-  padding: 4px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #da4f49;
-  border: 1px solid #bd362f;
-}
-
-.btn-danger:hover {
-  color: #fff;
-  background-color: #bd362f;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.todo-container {
-  width: 600px;
-  margin: 0 auto;
-}
-.todo-container .todo-wrap {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.app {
+  height: 360px;
+  width: 500px;
+  background-color: grey;
 }
 </style>
