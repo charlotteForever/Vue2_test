@@ -12,6 +12,7 @@
         v-show="itemObj.isEdit"
         :value="itemObj.name"
         @blur="handleBlur(itemObj, $event)"
+        ref="inputName"
       />
       <span v-show="!itemObj.isEdit">{{ itemObj.name }}</span>
     </label>
@@ -53,6 +54,10 @@ export default {
         this.$set(itemObj, "isEdit", true);
         console.log("没有isEdit属性");
       }
+      // 自动获取焦点
+      this.$nextTick(() => {
+        this.$refs.inputName.focus();
+      });
     },
     handleDelete(id) {
       if (confirm("确定删除吗？")) {
