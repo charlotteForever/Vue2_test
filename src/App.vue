@@ -26,11 +26,8 @@ export default {
   // 数据通过props传给List,List通过props传递给Item
   data() {
     return {
-      items: [
-        { id: "001", name: "吃饭", done: false },
-        { id: "002", name: "睡觉", done: true },
-        { id: "003", name: "开车", done: false },
-      ],
+      // 如果是null，items就是一个空数组
+      items: JSON.parse(localStorage.getItem("todoItem")) || [],
     };
   },
   methods: {
@@ -45,6 +42,14 @@ export default {
       this.items.forEach((todo) => {
         if (todo.id === id) {
           todo.done = !todo.done;
+        }
+      });
+    },
+    // 修改特定item项的name
+    changeItem(id, value) {
+      this.items.forEach((todo) => {
+        if (todo.id === id) {
+          todo.name = value;
         }
       });
     },
@@ -68,8 +73,20 @@ export default {
       });
     },
   },
+  watch: {
+    // 监视items，一旦被修改，就更新到localStorage里面
+    items: {
+      deep: true,
+
+      // 只传一个参数，拿到修改后的值存入本地
+      handler(value) {
+        localStorage.setItem("todoItem", JSON.stringify(value));
+      },
+    },
+  },
   mounted() {
     this.$bus.$on("checkItem", this.checkItem);
+    this.$bus.$on("changeItem", this.changeItem);
     // this.$bus.$on("deleteItem", this.deleteItem);
     this.pubId = pubsub.subscribe("deleteItem", this.deleteItem);
   },
@@ -104,6 +121,12 @@ body {
   color: #fff;
   background-color: #da4f49;
   border: 1px solid #bd362f;
+}
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(107, 167, 190);
 }
 
 .btn-danger:hover {
