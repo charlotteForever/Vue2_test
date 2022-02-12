@@ -29,7 +29,7 @@ h1 {
 }
 /* 元素消失时的动画 */
 .hello-leave-active {
-  animation: atguigu 1s linear reverse;
+  animation: atguigu 0.5s linear reverse;
 }
 /* 关键帧 */
 @keyframes atguigu {
@@ -37,7 +37,7 @@ h1 {
     transform: translateX(-100%);
   }
   to {
-    transform: translateX(0px);
+    transform: translateX(0);
   }
 }
 </style>
