@@ -1,23 +1,150 @@
 <template>
-  <div>
-    <test />
-    <test2 />
-    <test3 />
+  <div class="todo-container">
+    <div class="todo-wrap">
+      <Add @addItem="addItem" />
+      <List :items="items" />
+      <Choice
+        :items="items"
+        @changeDone="changeDone"
+        @deleteDone="deleteDone"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import test from "./components/test.vue";
-import test2 from "./components/test2.vue";
-import test3 from "./components/test3.vue";
+import pubsub from "pubsub-js";
+import Add from "./components/Add.vue";
+import List from "./components/List.vue";
+import Choice from "./components/Choice.vue";
 export default {
   components: {
-    test,
-    test2,
-    test3,
+    Add,
+    List,
+    Choice,
+  },
+  // 数据通过props传给List,List通过props传递给Item
+  data() {
+    return {
+      // 如果是null，items就是一个空数组
+      items: JSON.parse(localStorage.getItem("todoItem")) || [],
+    };
+  },
+  methods: {
+    // 添加一个item项
+    addItem(itemObj) {
+      this.items.unshift(itemObj);
+    },
+    // 修改item的done状态
+    checkItem(id) {
+      // 数据在哪，就在哪里修改数据
+      // 遍历拿到对应的itemObj，修改done属性
+      this.items.forEach((todo) => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+      });
+    },
+    // 修改特定item项的name
+    changeItem(id, value) {
+      this.items.forEach((todo) => {
+        if (todo.id === id) {
+          todo.name = value;
+        }
+      });
+    },
+    // 删除一个item
+    // 使用pubsub的方式，接受两个参数，但是只传递一个参数就OK
+    deleteItem(name, id) {
+      // filter返回一个新数组，所以需要再次赋值
+      this.items = this.items.filter((item) => {
+        return item.id != id;
+      });
+    },
+    changeDone(done) {
+      this.items.forEach((item) => {
+        item.done = done;
+      });
+    },
+    deleteDone() {
+      this.items = this.items.filter((item) => {
+        // 返回done为0，即没有勾选的 新数组
+        return !item.done;
+      });
+    },
+  },
+  watch: {
+    // 监视items，一旦被修改，就更新到localStorage里面
+    items: {
+      deep: true,
+
+      // 只传一个参数，拿到修改后的值存入本地
+      handler(value) {
+        localStorage.setItem("todoItem", JSON.stringify(value));
+      },
+    },
+  },
+  mounted() {
+    this.$bus.$on("checkItem", this.checkItem);
+    this.$bus.$on("changeItem", this.changeItem);
+    // this.$bus.$on("deleteItem", this.deleteItem);
+    this.pubId = pubsub.subscribe("deleteItem", this.deleteItem);
+  },
+  beforeDestroy() {
+    this.$bus.$off(["checkItem"]);
+    pubsub.unsuscribe(this.pubId);
   },
 };
 </script>
 
-<style scoped>
+<style>
+/*base*/
+body {
+  background: #fff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #da4f49;
+  border: 1px solid #bd362f;
+}
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(107, 167, 190);
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bd362f;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.todo-container {
+  width: 600px;
+  margin: 0 auto;
+}
+.todo-container .todo-wrap {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 </style>
