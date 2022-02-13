@@ -7,4 +7,8 @@ module.exports = {
         },
     },
     lintOnSave: false,
+    // vue-cli开启的服务器端口为8080（本地），我们要将发给8080的请求转发到下面的5000
+    devServer: {
+        proxy: 'http://localhost:5000',
+    }
 }
