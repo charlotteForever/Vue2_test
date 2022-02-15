@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "search",
   data() {
@@ -33,24 +32,26 @@ export default {
         errMessage: "",
       });
       // 此处使用es6模板字符串
-      axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
-        (response) => {
-          // 触发userInfo事件，并传递数据
-          this.$bus.$emit("getData", {
-            isLoading: false,
-            users: response.data.items,
-            errMessage: "",
-          });
-        },
-        (err) => {
-          this.$bus.$emit("getData", {
-            isLoading: false,
-            users: [],
-            errMessage: err.message,
-          });
-          console.log("发生了错误", err.message);
-        }
-      );
+      this.$http
+        .get(`https://api.github.com/search/users?q=${this.keyWord}`)
+        .then(
+          (response) => {
+            // 触发userInfo事件，并传递数据
+            this.$bus.$emit("getData", {
+              isLoading: false,
+              users: response.data.items,
+              errMessage: "",
+            });
+          },
+          (err) => {
+            this.$bus.$emit("getData", {
+              isLoading: false,
+              users: [],
+              errMessage: err.message,
+            });
+            console.log("发生了错误", err.message);
+          }
+        );
     },
   },
 };
