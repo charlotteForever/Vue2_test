@@ -1,35 +1,43 @@
 <template>
-  <div>
-    <button @click="getStudents">获取学生信息</button>
-    <button @click="getCars">获取汽车信息</button>
+  <div class="container">
+    <search />
+    <items />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import search from "./components/search.vue";
+import items from "./components/items.vue";
 export default {
   name: "App",
-  methods: {
-    getStudents() {
-      axios.get("http://localhost:8080/atguigu/students").then(
-        (response) => {
-          console.log("请求成功了", response.data);
-        },
-        (error) => {
-          console.log("请求失败了", error.message);
-        }
-      );
-    },
-    getCars() {
-      axios.get("http://localhost:8080/demo/cars").then(
-        (response) => {
-          console.log("请求成功了", response.data);
-        },
-        (error) => {
-          console.log("请求失败了", error.message);
-        }
-      );
-    },
-  },
+  components: { search, items },
 };
 </script>
+
+<style lang="css">
+/* 全局样式 */
+.album {
+  min-height: 50rem; /* Can be removed; just added for demo purposes */
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f7f7f7;
+}
+
+.card {
+  float: left;
+  width: 33.333%;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  border: 1px solid #efefef;
+  text-align: center;
+}
+
+.card > img {
+  margin-bottom: 0.75rem;
+  border-radius: 100px;
+}
+
+.card-text {
+  font-size: 85%;
+}
+</style>
