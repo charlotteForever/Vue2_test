@@ -50,9 +50,16 @@ const mutations = {
 const state = {
     sum: 0,
 };
+const getters = {
+    bigSum(state) {
+        // 和computed一样，把返回值作为自己的值
+        return state.sum * 10
+    }
+}
 // 传入一个对象
 export default new Vuex.Store({
     actions,
     mutations,
-    state
+    state,
+    getters
 })
