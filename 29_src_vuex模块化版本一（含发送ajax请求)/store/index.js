@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 Vue.use(Vuex)
+import axios from 'axios'
+import { nanoid } from 'nanoid'
 const countOptions = {
     namespaced: true,
     actions: {
@@ -53,6 +55,16 @@ const personOptions = {
             if (value.name.indexOf('王') === 0) {
                 context.commit('ADD_WANG', value)
             }
+        },
+        addRandom(context) {
+            axios.get('https://api.uixsj.cn/hitokoto/get?type=social').then(
+                (response) => {
+                    context.commit('ADD_RANDOM', { id: nanoid(), name: response.data })
+                },
+                (err) => {
+                    alert(err)
+                }
+            )
         }
     },
     mutations: {
@@ -61,6 +73,9 @@ const personOptions = {
             state.personList.unshift(value)
         },
         ADD_WANG(state, value) {
+            state.personList.unshift(value)
+        },
+        ADD_RANDOM(state, value) {
             state.personList.unshift(value)
         }
     },
