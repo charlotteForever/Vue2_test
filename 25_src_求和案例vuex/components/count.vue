@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h2>当前求和为：{{ sum }}</h2>
-    <h3>当前和的十倍为：{{ bigSum }}</h3>
-    <h3>我在{{ school }}学{{ subject }}</h3>
+    <h2>当前求和为：{{ $store.state.sum }}</h2>
+    <h3>当前和的十倍为：{{ $store.getters.bigSum }}</h3>
     <select v-model.number="n">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -16,8 +15,6 @@
 </template>
 
 <script>
-// 一定要大写
-import { mapState, mapGetters } from "vuex";
 export default {
   name: "Count",
   data() {
@@ -42,29 +39,6 @@ export default {
     increaseWait() {
       this.$store.dispatch("jiaWait", this.n);
     },
-  },
-  computed: {
-    // sum() {
-    //   return this.$store.state.sum;
-    // },
-    // school() {
-    //   return this.$store.state.school;
-    // },
-    // subject() {
-    //   return this.$store.state.subject;
-    // },
-    // 对象写法
-    // ...mapState({ sum: "sum", school: "school", subject: "subject" }),
-    // 数组写法
-    ...mapState(["sum", "school", "subject"]),
-    /************************************************/
-    // bigSum() {
-    //   return this.$store.getters.bigSum;
-    // },
-    // 对象写法
-    // ...mapGetters({ bigSum: "bigSum" }),
-    // 数组写法
-    ...mapGetters(["bigSum"]),
   },
 };
 </script>

@@ -49,8 +49,6 @@ const mutations = {
 // state用于存储数据
 const state = {
     sum: 0,
-    school: '尚硅谷',
-    subject: '前端'
 };
 const getters = {
     bigSum(state) {
