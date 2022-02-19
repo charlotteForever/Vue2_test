@@ -19,17 +19,13 @@ export default {
   name: "Person",
   data() {
     return {
-      // 存储input刷入
       name: "",
     };
   },
   methods: {
     addPerson() {
-      // 封装person对象
       const person = { id: nanoid(), name: this.name };
-      //   commit过去
       this.$store.commit("ADD_PERSON", person);
-      //   清空输入
       this.name = "";
     },
   },

@@ -12,7 +12,7 @@
     <button @click="decrease(n)">-</button>
     <button @click="increaseOdd(n)">当前求和为奇数再加</button>
     <button @click="increaseWait(n)">等一等再加</button>
-    <h3 style="color: red">Person组件总人数为：{{ personList.length }}</h3>
+    <!-- <h3 style="color: red">Person组件总人数为：{{ personList.length }}</h3> -->
   </div>
 </template>
 
@@ -26,12 +26,18 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({ increase: "JIA", decrease: "JIAN" }),
-    ...mapActions({ increaseOdd: "jiaOdd", increaseWait: "jiaWait" }),
+    // 对应做出改变
+    ...mapMutations("countOptions", { increase: "JIA", decrease: "JIAN" }),
+    ...mapActions("countOptions", {
+      increaseOdd: "jiaOdd",
+      increaseWait: "jiaWait",
+    }),
   },
   computed: {
-    ...mapState(["sum", "school", "subject", "personList"]),
-    ...mapGetters(["bigSum"]),
+    // 要用这种形式，必须在store的声明里面加上：namespaced：true
+    // 也可以...mapState("countOptions",personOptions),但是使用时要countOptions.sum
+    ...mapState("countOptions", ["sum", "school", "subject", "personList"]),
+    ...mapGetters("countOptions", ["bigSum"]),
   },
 };
 </script>
